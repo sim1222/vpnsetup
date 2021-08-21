@@ -11,7 +11,7 @@ tar xzvf softether-vpnserver*
 cd vpnserver
 make
 cd ..
-sudo cp vpnserver /usr/local
+sudo cp -r vpnserver /usr/local
 cd /usr/local/vpnserver
 sudo chmod 700 vpncmd vpnserver
 chmod +x vpncmd vpnserver
@@ -29,7 +29,7 @@ RestartSec=3s
 
 [Install]
 WantedBy=multi-user.target
-} > /etc/systemd/system/vpnserver.service
+} | sudo tee -a /etc/systemd/system/vpnserver.service
 sudo systemctl enable vpnserver
 sudo systemctl start vpnserver
 
