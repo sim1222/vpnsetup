@@ -16,20 +16,17 @@ cd /usr/local/vpnserver
 sudo chmod 700 vpncmd vpnserver
 sudo chmod +x vpncmd vpnserver
 
-{
-    [Unit]
-Description=SoftEther VPN Server
-After=network.target network-online.target
+echo '[Unit]' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'Description=SoftEther VPN Serve' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'After=network.target network-online.target' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo '[Service]' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'ExecStart=/usr/local/vpnserver/vpnserver start' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'ExecStop=/usr/local/vpnserver/vpnserver stop' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'Type=forking' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'RestartSec=3s' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo '[Install]' | sudo tee -a /etc/systemd/system/vpnserver.service
+echo 'WantedBy=multi-user.target' | sudo tee -a /etc/systemd/system/vpnserver.service
 
-[Service]
-ExecStart=/usr/local/vpnserver/vpnserver start
-ExecStop=/usr/local/vpnserver/vpnserver stop
-Type=forking
-RestartSec=3s
-
-[Install]
-WantedBy=multi-user.target
-} | sudo tee /etc/systemd/system/vpnserver.service
 
 sudo systemctl enable vpnserver
 sudo systemctl start vpnserver
