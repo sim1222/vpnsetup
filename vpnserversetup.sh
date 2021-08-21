@@ -14,7 +14,7 @@ cd ..
 sudo cp -r vpnserver /usr/local
 cd /usr/local/vpnserver
 sudo chmod 700 vpncmd vpnserver
-chmod +x vpncmd vpnserver
+sudo chmod +x vpncmd vpnserver
 
 {
     [Unit]
@@ -29,7 +29,8 @@ RestartSec=3s
 
 [Install]
 WantedBy=multi-user.target
-} | sudo tee -a /etc/systemd/system/vpnserver.service
+} | sudo tee /etc/systemd/system/vpnserver.service
+
 sudo systemctl enable vpnserver
 sudo systemctl start vpnserver
 
